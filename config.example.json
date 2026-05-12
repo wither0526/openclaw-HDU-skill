@@ -1,0 +1,11 @@
+{
+  "username": "YOUR_STUDENT_ID",
+  "password": "YOUR_UNIFIED_AUTH_PASSWORD",
+  "base_url": "https://api.hduhelp.com",
+  "token": "",
+
+  "seat_username": "YOUR_STUDENT_ID",
+  "seat_password": "YOUR_UNIFIED_AUTH_PASSWORD",
+
+  "killcourse_path": "~/HDU-KillCourse"
+}
