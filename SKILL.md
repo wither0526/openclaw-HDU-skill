@@ -80,12 +80,13 @@ python3 scripts/hdu_classroom.py --week 11 --weekday 3 --section 5
 **触发**: "图书馆"、"座位"、"预约座位"、"占座"
 
 ```bash
-python3 scripts/hdu_seat.py list                  # 查看可用座位
-python3 scripts/hdu_seat.py book --seat 61290     # 预约指定座位
-python3 scripts/hdu_seat.py cancel                # 取消预约
+python3 scripts/seat/book.py                      # 预约老地方（默认明天18-22点）
+python3 scripts/seat/book.py --date 2026-05-14    # 指定日期
+python3 scripts/seat/book.py --begin 14 --hours 4 # 指定时间段
 ```
 
-**注意**: 生活区每次最多预约 4 小时，可分次预约拼时长。
+**老地方**: 求新书院66号（Seat ID: 61290）
+**注意**: 生活区每次最多 4 小时，可分次预约拼时长。
 
 ---
 
