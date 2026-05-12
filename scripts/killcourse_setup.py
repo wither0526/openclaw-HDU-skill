@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-"""HDU-KillCourse 自动下载与配置"""
+﻿#!/usr/bin/env python3
+"""HDU-KillCourse 鑷姩涓嬭浇涓庨厤缃?""
 import json
 import os
 import sys
@@ -9,7 +9,7 @@ import zipfile
 import tempfile
 import shutil
 from pathlib import Path
-from hdu_api import HDUAPI
+from api.base import HDUAPI
 
 RELEASES_URL = "https://api.github.com/repos/cr4n5/HDU-KillCourse/releases/latest"
 
@@ -27,7 +27,7 @@ def setup_killcourse():
             break
     
     if not exe_path:
-        print("⬇️ 正在下载 HDU-KillCourse...")
+        print("猬囷笍 姝ｅ湪涓嬭浇 HDU-KillCourse...")
         # Get latest release info
         req = urllib.request.Request(RELEASES_URL)
         with urllib.request.urlopen(req) as resp:
@@ -42,21 +42,21 @@ def setup_killcourse():
                 break
         
         if not win_asset:
-            print("❌ 未找到 Windows 版本 Release")
-            print("请手动下载: https://github.com/cr4n5/HDU-KillCourse/releases")
+            print("鉂?鏈壘鍒?Windows 鐗堟湰 Release")
+            print("璇锋墜鍔ㄤ笅杞? https://github.com/cr4n5/HDU-KillCourse/releases")
             return
         
         kc_dir.mkdir(parents=True, exist_ok=True)
         exe_path = kc_dir / win_asset["name"]
         
-        print(f"  下载: {win_asset['name']}")
+        print(f"  涓嬭浇: {win_asset['name']}")
         urllib.request.urlretrieve(win_asset["browser_download_url"], exe_path)
-        print("✅ 下载完成")
+        print("鉁?涓嬭浇瀹屾垚")
     else:
-        print(f"✅ 已存在: {exe_path}")
+        print(f"鉁?宸插瓨鍦? {exe_path}")
     
     # Generate config.json
-    print("📝 生成抢课配置...")
+    print("馃摑 鐢熸垚鎶㈣閰嶇疆...")
     kc_config = {
         "cas_login": {
             "username": config.get("username", ""),
@@ -97,21 +97,18 @@ def setup_killcourse():
         json.dump(kc_config, f, indent=2, ensure_ascii=False)
     
     print("""
-🚀 抢课工具配置完成！
-
-使用步骤:
-1. 双击运行抢课程序，或运行:
+馃殌 鎶㈣宸ュ叿閰嶇疆瀹屾垚锛?
+浣跨敤姝ラ:
+1. 鍙屽嚮杩愯鎶㈣绋嬪簭锛屾垨杩愯:
    {exe_name}
 
-2. 在浏览器打开 http://localhost:6688
-   - 配置要选的课程
-   - 设置学年学期
-   - 保存配置
+2. 鍦ㄦ祻瑙堝櫒鎵撳紑 http://localhost:6688
+   - 閰嶇疆瑕侀€夌殑璇剧▼
+   - 璁剧疆瀛﹀勾瀛︽湡
+   - 淇濆瓨閰嶇疆
 
-3. 回到命令行窗口，按 Enter 开始抢课
-
-4. 蹲课: 在 Web 界面开启蹲课模式
-""".strip())
+3. 鍥炲埌鍛戒护琛岀獥鍙ｏ紝鎸?Enter 寮€濮嬫姠璇?
+4. 韫茶: 鍦?Web 鐣岄潰寮€鍚共璇炬ā寮?""".strip())
 
 if __name__ == "__main__":
     setup_killcourse()
