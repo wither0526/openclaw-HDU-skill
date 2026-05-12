@@ -1,30 +1,16 @@
-﻿#!/usr/bin/env python3
-"""鑰冭瘯瀹夋帓"""
-import argparse
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""考试安排"""
 from api.base import HDUAPI
 
-def get_exam(school_year="", semester=""):
+def run():
     api = HDUAPI()
-    if not school_year or not semester:
-        time_info = api.api_get("/time")
-        school_year = time_info.get("schoolYear", "")
-        semester = time_info.get("semester", "")
-    params = {"schoolYear": school_year, "semester": semester}
-    return api.api_get("/salmon_base/student/exam", params=params)
+    t = api.get('/time')
+    d = api.get('/salmon_base/student/exam', schoolYear=t['schoolYear'], semester=t['semester'])
+    lines = ['【考试安排】']
+    for item in (d if isinstance(d, list) else []):
+        lines.append(f'  {item.get("courseName","")} | {item.get("examTime","")} | {item.get("classroom","")}')
+    print('\n'.join(lines))
 
-def format_exam(data):
-    lines = ["馃摑 鑰冭瘯瀹夋帓"]
-    for item in (data if isinstance(data, list) else []):
-        name = item.get("courseName", "")
-        time_str = item.get("examTime", "")
-        location = item.get("classroom", "")
-        seat = item.get("seatNumber", "")
-        lines.append(f"  {name} | {time_str} | {location} | 搴т綅: {seat}")
-    return "\n".join(lines) if len(lines) > 1 else "鏆傛棤鑰冭瘯瀹夋帓"
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--semester", type=int, default=2)
-    args = parser.parse_args()
-    data = get_exam(semester=args.semester)
-    print(format_exam(data))
+if __name__ == '__main__':
+    run()
